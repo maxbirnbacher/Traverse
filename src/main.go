@@ -59,6 +59,13 @@ func main() {
 		fmt.Println("Requesting /welcome from ", r.RemoteAddr)
 		//return welcome message
 		fmt.Fprintf(w, "Welcome to Traverse!\n")
+		//create a new UUID
+		uuid := generateUUID()
+		//add the UUID to the redirects map
+		redirects[uuid] = []string{"https://www.google.com"}
+		//return the UUID
+		fmt.Println("Generated URL: /", uuid, " to ", "https://www.google.com")
+		fmt.Fprintf(w, "Generated URL: /%s\n", uuid)
 	})
 
 	// Start the HTTP server
