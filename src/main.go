@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+
 	"github.com/google/uuid"
 )
 
@@ -46,6 +47,11 @@ func main() {
 		selectedUrl := urls[rand.Intn(len(urls))]
 
 		http.Redirect(w, r, selectedUrl, http.StatusFound)
+	})
+
+	// welcome url
+	http.HandleFunc("/welcome", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Welcome to Traverse")
 	})
 
 	// Start the HTTP server
