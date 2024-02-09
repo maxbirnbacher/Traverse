@@ -35,7 +35,7 @@ func main() {
 			return
 		}
 
-		selectedUrl := urls[rand.Intn(len(urls))]
+		selectedUrl := paths[rand.Intn(len(paths))] // Select a random URL from the list of URLs
 		fmt.Println("Redirecting request to ", selectedUrl)
 		http.Redirect(w, r, selectedUrl, http.StatusFound)
 	})
