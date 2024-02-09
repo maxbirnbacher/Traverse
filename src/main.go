@@ -65,7 +65,9 @@ func main() {
 			return
 		}
 		//generate a fake URI path with faker
-		path := faker.Internet().uri_path()
+		path := faker.URL()
+		// use only the part after the last slash
+		path = path[strings.LastIndex(path, "/")+1:]
 		//get the URL from the query parameters
 		url := r.Form.Get("url")
 		//add the URL to the redirects map
