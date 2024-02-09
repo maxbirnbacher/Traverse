@@ -4,7 +4,7 @@ services:
     build: 
       context: ./src
       dockerfile: Containerfile
-      tag: traverse:latest
     container_name: traverse
+    image: traverse
     ports:
       - "8080:8080"
