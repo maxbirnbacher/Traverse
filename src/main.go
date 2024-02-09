@@ -1,12 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
-
 	"github.com/google/uuid"
 )
 
@@ -16,28 +14,15 @@ func generateUUID() string {
 	return uuid.New().String()
 }
 
+// generate a security token
+func generateToken() string {
+	return uuid.New().String()
+}
+
+var token = generateToken()
+
 func main() {
-	http.HandleFunc("/gen", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Requesting /gen from ", r.RemoteAddr)
-		if r.Method != http.MethodPost {
-			http.Error(w, "Invalid method", http.StatusMethodNotAllowed)
-			fmt.Println("Invalid method")
-			return
-		}
-
-		var urls []string
-		err := json.NewDecoder(r.Body).Decode(&urls)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		uuid := generateUUID()
-		redirects[uuid] = urls
-
-		fmt.Fprintf(w, "Generated URL: /%s\n", uuid)
-	})
-
+	// Redirect url
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Requesting ", r.RequestURI, " from ", r.RemoteAddr)
 		uuid := r.URL.Path[1:] // Get the UUID from the path
@@ -68,8 +53,29 @@ func main() {
 		fmt.Fprintf(w, "Generated URL: /%s\n", uuid)
 	})
 
+	// add a redirect url
+	http.HandleFunc("/add", func(w http.ResponseWriter, r *http.Request) {
+		//log the request
+		fmt.Println("Requesting /add from ", r.RemoteAddr)
+		//parse the query parameters
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, "Error parsing form", http.StatusBadRequest)
+			return
+		}
+		//get the UUID from the form
+		uuid := generateUUID()
+		//get the URL from the form
+		url := r.FormValue("url")
+		//add the URL to the redirects map
+		redirects[uuid] = append(redirects[uuid], url)
+		//return success message
+		fmt.Fprintf(w, "Added URL: %s to /%s\n", url, uuid)
+	})
+
 	// Start the HTTP server
 	output := "Server is running on port 8080"
 	fmt.Println(output)
+	fmt.Println("Use the security token to create a initial url: ", token)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
