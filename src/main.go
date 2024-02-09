@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"strings"
 	"github.com/google/uuid"
 	"github.com/go-faker/faker/v4"
 )
@@ -27,9 +28,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Requesting ", r.RequestURI, " from ", r.RemoteAddr)
 		requested_path := r.URL.Path[1:] // Get the requested path from the path
-		urls, exists := redirects[uuid]
-		// Check if the path exists in the redirects map
-		paths, exists := redirects[requested_path]
+		paths, exists := redirects[requested_path] // Check if the path exists in the redirects map
 		if !exists || len(urls) == 0 {
 			http.NotFound(w, r)
 			fmt.Println("Path not found")
