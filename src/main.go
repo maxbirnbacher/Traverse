@@ -18,8 +18,10 @@ func generateUUID() string {
 
 func main() {
 	http.HandleFunc("/gen", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Requesting /gen from ", r.RemoteAddr)
 		if r.Method != http.MethodPost {
 			http.Error(w, "Invalid method", http.StatusMethodNotAllowed)
+			fmt.Println("Invalid method")
 			return
 		}
 
@@ -37,10 +39,12 @@ func main() {
 	})
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("Requesting ", r.RequestURI, " from ", r.RemoteAddr)
 		uuid := r.URL.Path[1:] // Get the UUID from the path
 		urls, exists := redirects[uuid]
 		if !exists || len(urls) == 0 {
 			http.NotFound(w, r)
+			fmt.Println("UUID not found")
 			return
 		}
 
@@ -51,7 +55,10 @@ func main() {
 
 	// welcome url
 	http.HandleFunc("/welcome", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Welcome to Traverse")
+		//log the request
+		fmt.Println("Requesting /welcome from ", r.RemoteAddr)
+		//return welcome message
+		fmt.Fprintf(w, "Welcome to Traverse!\n")
 	})
 
 	// Start the HTTP server
