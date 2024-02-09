@@ -1,6 +1,10 @@
 version: '3'
 services:
-  web:
-    build: ./src
+  traverse:
+    build: 
+      context: ./src
+      dockerfile: Containerfile
+      tag: traverse:latest
+    container_name: traverse
     ports:
       - "8080:8080"
