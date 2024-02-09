@@ -64,11 +64,10 @@ func main() {
 			http.Error(w, "Error parsing form", http.StatusBadRequest)
 			return
 		}
-		//generate a fake URI path
-		var fakePath string
-		faker.FakeData(&fakePath)
+		//generate a fake URI path with fake.uri_path
+		fakePath := faker.uri_path()
 		//get the URL from the form
-		url := r.FormValue("url")
+		url := r.Form.Get("url")
 		//add the URL to the redirects map
 		redirects[fakePath] = append(redirects[fakePath], url)
 		//return success message
