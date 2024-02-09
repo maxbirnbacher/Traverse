@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"net/http"
 	"github.com/google/uuid"
+	"github.com/bxcodec/faker/v3"
 )
 
 var redirects = make(map[string][]string)
@@ -25,11 +26,11 @@ func main() {
 	// Redirect url
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Requesting ", r.RequestURI, " from ", r.RemoteAddr)
-		uuid := r.URL.Path[1:] // Get the UUID from the path
+		requested_path := r.URL.Path[1:] // Get the requested path from the path
 		urls, exists := redirects[uuid]
 		if !exists || len(urls) == 0 {
 			http.NotFound(w, r)
-			fmt.Println("UUID not found")
+			fmt.Println("Path not found")
 			return
 		}
 
@@ -63,14 +64,15 @@ func main() {
 			http.Error(w, "Error parsing form", http.StatusBadRequest)
 			return
 		}
-		//get the UUID from the form
-		uuid := generateUUID()
+		//generate a fake URI path
+		var fakePath string
+		faker.FakeData(&fakePath)
 		//get the URL from the form
 		url := r.FormValue("url")
 		//add the URL to the redirects map
-		redirects[uuid] = append(redirects[uuid], url)
+		redirects[fakePath] = append(redirects[fakePath], url)
 		//return success message
-		fmt.Fprintf(w, "Added URL: %s to /%s\n", url, uuid)
+		fmt.Fprintf(w, "Added URL: %s to /%s\n", url, fakePath)
 	})
 
 	// Start the HTTP server
