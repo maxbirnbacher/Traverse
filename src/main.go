@@ -29,7 +29,7 @@ func main() {
 		fmt.Println("Requesting ", r.RequestURI, " from ", r.RemoteAddr)
 		requested_path := r.URL.Path[1:] // Get the requested path from the path
 		paths, exists := redirects[requested_path] // Check if the path exists in the redirects map
-		if !exists || len(urls) == 0 {
+		if !exists || len(paths) == 0 {
 			http.NotFound(w, r)
 			fmt.Println("Path not found")
 			return
