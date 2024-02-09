@@ -49,7 +49,7 @@ func main() {
 		}
 
 		selectedUrl := urls[rand.Intn(len(urls))]
-
+		fmt.Println("Redirecting request to ", selectedUrl)
 		http.Redirect(w, r, selectedUrl, http.StatusFound)
 	})
 
