@@ -65,8 +65,8 @@ func main() {
 			http.Error(w, "Error parsing form", http.StatusBadRequest)
 			return
 		}
-		//generate a fake URI path with faker
-		path := faker.URL()
+		//generate a fake URI path
+		path := faker.Internet().Slug()
 		// use only the part after the last slash
 		path = path[strings.LastIndex(path, "/")+1:]
 		fmt.Println("Generated path: ", path)
