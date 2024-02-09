@@ -6,8 +6,6 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
-	"time"
-
 	"github.com/google/uuid"
 )
 
@@ -45,7 +43,6 @@ func main() {
 			return
 		}
 
-		rand.Seed(time.Now().UnixNano())
 		selectedUrl := urls[rand.Intn(len(urls))]
 
 		http.Redirect(w, r, selectedUrl, http.StatusFound)
