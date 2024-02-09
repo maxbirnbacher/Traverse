@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"net/http"
 	"github.com/google/uuid"
-	"github.com/bxcodec/faker/v3"
+	"github.com/go-faker/faker/v4"
 )
 
 var redirects = make(map[string][]string)
@@ -64,14 +64,15 @@ func main() {
 			http.Error(w, "Error parsing form", http.StatusBadRequest)
 			return
 		}
-		//generate a fake URI path with fake.uri_path
-		fakePath := faker.uri_path()
-		//get the URL from the form
+		//generate a fake URI path with faker
+		path := faker.Internet().uri_path()
+		//get the URL from the query parameters
 		url := r.Form.Get("url")
 		//add the URL to the redirects map
-		redirects[fakePath] = append(redirects[fakePath], url)
-		//return success message
-		fmt.Fprintf(w, "Added URL: %s to /%s\n", url, fakePath)
+		redirects[uuid] = append(redirects[path], url)
+		//return the URL
+		fmt.Println("Generated URL: /", path, " to ", url)
+		fmt.Fprintf(w, "Generated URL: /%s to %s\n", path, url)
 	})
 
 	// Start the HTTP server
