@@ -72,7 +72,7 @@ func main() {
 		//get the URL from the query parameters
 		url := r.Form.Get("url")
 		//add the URL to the redirects map
-		redirects[uuid] = append(redirects[path], url)
+		redirects[path] = append(redirects[path], url)
 		//return the URL
 		fmt.Println("Generated URL: /", path, " to ", url)
 		fmt.Fprintf(w, "Generated URL: /%s to %s\n", path, url)
