@@ -55,5 +55,7 @@ func main() {
 	})
 
 	// Start the HTTP server
+	output := "Server is running on port 8080"
+	fmt.Println(output)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
