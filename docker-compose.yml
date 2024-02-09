@@ -5,6 +5,5 @@ services:
       context: ./src
       dockerfile: Containerfile
     container_name: traverse
-    image: traverse
     ports:
       - "8080:8080"
