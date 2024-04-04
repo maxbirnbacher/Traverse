@@ -1,0 +1,10 @@
+version: '3'
+services:
+  traverse:
+    build: 
+      context: .
+      dockerfile: Containerfile
+    container_name: traverse-master
+    image: traverse-master
+    ports:
+      - "8080:8080"

@@ -2,9 +2,9 @@ version: '3'
 services:
   traverse:
     build: 
-      context: ./src
+      context: .
       dockerfile: Containerfile
-    container_name: traverse
-    image: traverse
+    container_name: traverse-worker
+    image: traverse-worker
     ports:
       - "8080:8080"
