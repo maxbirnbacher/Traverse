@@ -1,6 +1,6 @@
 module traverse-worker
 
-go 1.22.0
+go 1.22
 
 replace traverse/pkg/utils => ./pkg/utils
 
