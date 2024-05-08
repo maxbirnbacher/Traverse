@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"log"
-	"math/rand"
 	"net/http"
 	"traverse/pkg/utils"
 	"traverse/pkg/logging"
