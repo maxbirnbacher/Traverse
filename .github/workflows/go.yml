@@ -21,12 +21,12 @@ jobs:
 
     - name: Build master service
       run: |
-        cd master/src
+        cd ${{ github.workspace }}/master/src
         GOOS=linux GOARCH=amd64 go build -o master
 
     - name: Build worker service
       run: |
-        cd ../../worker/src
+        cd ${{ github.workspace }}/worker/src
         GOOS=linux GOARCH=amd64 go build -o worker
 
     - name: Upload master binary
