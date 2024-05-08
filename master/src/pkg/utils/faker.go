@@ -18,4 +18,5 @@ func GeneratePathAndURL(r *http.Request) (string, string) {
     // url := r.Form.Get("url")
 
     // return path, url
+    return "", ""
 }
