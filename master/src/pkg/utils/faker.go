@@ -1,9 +1,9 @@
 package utils
 
 import (
-    "fmt"
+    // "fmt"
     "net/http"
-    "strings"
+    // "strings"
 )
 
 func GeneratePathAndURL(r *http.Request) (string, string) {
