@@ -1,0 +1,42 @@
+name: Build
+
+on: 
+  push:
+    paths:
+      - 'master/**'
+      - 'worker/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Build master service
+      run: |
+        cd master/src
+        GOOS=linux GOARCH=amd64 go build -o master
+
+    - name: Build worker service
+      run: |
+        cd ../../worker/src
+        GOOS=linux GOARCH=amd64 go build -o worker
+
+    - name: Upload master binary
+      uses: actions/upload-artifact@v2
+      with:
+        name: traverse-master
+        path: ./master/src/master
+
+    - name: Upload worker binary
+      uses: actions/upload-artifact@v2
+      with:
+        name: traverse-worker
+        path: ./worker/src/worker
