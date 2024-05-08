@@ -6,5 +6,10 @@ services:
       dockerfile: Containerfile
     container_name: traverse-master
     image: traverse-master
+    environment:
+      - TRAVERSE_PORT=8080 # Port of the Traverse service
+      - HB_IP=10.0.0.50 # IP of the HorizonBackbone instance
+      - HB_C2_PORT=8001 # Port of the C2 service
+      - HB_LOG_PORT=5514 # Port of the Logging service
     ports:
       - "8080:8080"
